@@ -17,10 +17,19 @@
 #
 chef_gem 'aws-sdk'
 
-require 'json'
-require 'aws-sdk'
+ruby_block 'read_secrets' do
+  block do
+    require 'json'
+    require 'aws-sdk'
 
-client = Aws::SecretsManager::Client.new(region: 'us-west-1')
-resp = client.get_secret_value({secret_id: 'dev-SERVICE'})
-password = JSON.parse(resp.secret_string)
-File.open('/tmp/data', 'w') { |file| file.write(password) }
+    client = Aws::SecretsManager::Client.new(region: 'us-east-1')
+    resp = client.get_secret_value({secret_id: node[:env]+'-SERVICE'})
+    node.default['password'] = JSON.parse(resp.secret_string)
+  end
+  action :run
+end
+
+file '/tmp/passwords' do
+  content lazy{"passwords: #{node['password']}"}
+  mode '0755'
+end
