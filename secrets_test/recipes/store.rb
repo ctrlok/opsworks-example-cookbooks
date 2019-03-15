@@ -1,6 +1,6 @@
 #
-# Cookbook Name:: alb_support
-# Recipe:: uninstall_http_server
+# Cookbook Name:: secrets_test
+# Recipe:: store
 #
 # Copyright 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 #
