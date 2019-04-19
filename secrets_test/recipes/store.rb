@@ -31,5 +31,5 @@ end
 
 file '/tmp/passwords' do
   content lazy{"passwords: #{node['password']}"}
-  mode '0755'
+  mode '0700'
 end
